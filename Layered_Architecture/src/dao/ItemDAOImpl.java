@@ -39,4 +39,14 @@ public class ItemDAOImpl {
         pstm.setInt(4, dto.getQtyOnHand());
         return pstm.executeUpdate() > 0;
     }
+
+    public boolean updateItem(ItemDTO dto) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
+        pstm.setString(1, dto.getCode());
+        pstm.setString(2, dto.getDescription());
+        pstm.setBigDecimal(3, dto.getUnitPrice());
+        pstm.setInt(4, dto.getQtyOnHand());
+        return pstm.executeUpdate() > 0;
+    }
 }
