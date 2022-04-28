@@ -3,7 +3,6 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import dao.CustomerDAOImpl;
-import db.DBConnection;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +20,7 @@ import view.tdm.CustomerTM;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -150,7 +149,7 @@ public class ManageCustomersFormController {
                 }
 
                 CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-                customerDAO.saveCustomer(new CustomerDTO(id,name,address));
+                customerDAO.saveCustomer(new CustomerDTO(id, name, address));
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
@@ -159,15 +158,18 @@ public class ManageCustomersFormController {
                 e.printStackTrace();
             }
 
+
         } else {
             /*Update customer*/
             try {
                 if (!existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
+
                 //Customer update
                 CustomerDAOImpl customerDAO = new CustomerDAOImpl();
                 customerDAO.updateCustomer(new CustomerDTO(id, name, address));
+
 
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
@@ -215,15 +217,10 @@ public class ManageCustomersFormController {
 
     private String generateNewId() {
         try {
-            Connection connection = DBConnection.getDbConnection().getConnection();
-            ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
-            if (rst.next()) {
-                String id = rst.getString("id");
-                int newCustomerId = Integer.parseInt(id.replace("C00-", "")) + 1;
-                return String.format("C00-%03d", newCustomerId);
-            } else {
-                return "C00-001";
-            }
+
+            CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+            return customerDAO.generateNewID();
+
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
         } catch (ClassNotFoundException e) {
