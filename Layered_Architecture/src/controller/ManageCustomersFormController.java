@@ -165,9 +165,10 @@ public class ManageCustomersFormController {
                 if (!existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
+                //Customer update
                 CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-                customerDAO.updateCustomer(new CustomerDTO(id,name,address));
-                tblCustomers.getItems().add(new CustomerTM(id, name, address));
+                customerDAO.updateCustomer(new CustomerDTO(id, name, address));
+
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
             } catch (ClassNotFoundException e) {
