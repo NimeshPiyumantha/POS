@@ -83,7 +83,7 @@ public class ManageItemsFormController {
             ArrayList<ItemDTO> allItem = itemDAO.getAllItems();
 
             for (ItemDTO item : allItem) {
-                tblItems.getItems().add(new ItemTM(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand()));
+                tblItems.getItems().add(new ItemTM(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
             }
 
         } catch (SQLException e) {
@@ -141,7 +141,7 @@ public class ManageItemsFormController {
             if (!existItem(code)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
-            ItemDAO itemDAO=new ItemDAOImpl();
+            ItemDAO itemDAO = new ItemDAOImpl();
             itemDAO.deleteItem(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
@@ -199,8 +199,8 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
                 }
                 /*Update Item*/
-                ItemDAO itemDAO=new ItemDAOImpl();
-                itemDAO.updateItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
+                ItemDAO itemDAO = new ItemDAOImpl();
+                itemDAO.updateItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
 
 
             } catch (SQLException e) {
@@ -220,7 +220,7 @@ public class ManageItemsFormController {
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        ItemDAO itemDAO =new ItemDAOImpl();
+        ItemDAO itemDAO = new ItemDAOImpl();
         return itemDAO.existItem(code);
     }
 
@@ -228,7 +228,7 @@ public class ManageItemsFormController {
     private String generateNewId() {
         try {
 
-            ItemDAO itemDAO=new ItemDAOImpl();
+            ItemDAO itemDAO = new ItemDAOImpl();
             return itemDAO.generateNewCode();
 
         } catch (SQLException e) {
