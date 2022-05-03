@@ -3,8 +3,6 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import dao.CustomerDAOImpl;
-import dao.ItemDAOImpl;
 import db.DBConnection;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -189,13 +187,17 @@ public class PlaceOrderFormController {
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        ItemDAOImpl itemDAO = new ItemDAOImpl();
-        return itemDAO.existItem(code);
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT code FROM Item WHERE code=?");
+        pstm.setString(1, code);
+        return pstm.executeQuery().next();
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-        return customerDAO.existCustomer(id);
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
+        pstm.setString(1, id);
+        return pstm.executeQuery().next();
     }
 
     public String generateNewOrderId() {
@@ -302,7 +304,7 @@ public class PlaceOrderFormController {
         for (OrderDetailTM detail : tblOrderDetails.getItems()) {
             total = total.add(detail.getTotal());
         }
-        lblTotal.setText("Total: " + total);
+        lblTotal.setText("Total: " +total);
     }
 
     private void enableOrDisablePlaceOrderButton() {
