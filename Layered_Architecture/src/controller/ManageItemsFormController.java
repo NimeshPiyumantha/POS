@@ -35,6 +35,7 @@ import java.util.ArrayList;
  **/
 
 public class ManageItemsFormController {
+    private final ItemDAO itemDAO = new ItemDAOImpl();
     public AnchorPane root;
     public JFXTextField txtCode;
     public JFXTextField txtDescription;
@@ -79,7 +80,6 @@ public class ManageItemsFormController {
         tblItems.getItems().clear();
         try {
 
-            ItemDAO itemDAO = new ItemDAOImpl();
             ArrayList<ItemDTO> allItem = itemDAO.getAllItems();
 
             for (ItemDTO item : allItem) {
@@ -141,7 +141,7 @@ public class ManageItemsFormController {
             if (!existItem(code)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
-            ItemDAO itemDAO = new ItemDAOImpl();
+
             itemDAO.deleteItem(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
@@ -182,7 +182,7 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
                 //Save Item
-                ItemDAO itemDAO = new ItemDAOImpl();
+
                 itemDAO.saveItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
 
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
@@ -199,7 +199,6 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
                 }
                 /*Update Item*/
-                ItemDAO itemDAO = new ItemDAOImpl();
                 itemDAO.updateItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
 
 
@@ -220,7 +219,7 @@ public class ManageItemsFormController {
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        ItemDAO itemDAO = new ItemDAOImpl();
+
         return itemDAO.existItem(code);
     }
 
@@ -228,7 +227,7 @@ public class ManageItemsFormController {
     private String generateNewId() {
         try {
 
-            ItemDAO itemDAO = new ItemDAOImpl();
+
             return itemDAO.generateNewCode();
 
         } catch (SQLException e) {
