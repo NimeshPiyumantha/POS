@@ -17,7 +17,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.CustomerDTO;
-import model.ItemDTO;
 import view.tdm.CustomerTM;
 
 import java.io.IOException;
@@ -33,6 +32,8 @@ import java.util.List;
  **/
 
 public class ManageCustomersFormController {
+    //Property Injection (DI)
+    private final CrudDAO<CustomerDTO, String> customerDAO = new CustomerDAOImpl();
     public AnchorPane root;
     public JFXTextField txtCustomerName;
     public JFXTextField txtCustomerId;
@@ -41,8 +42,6 @@ public class ManageCustomersFormController {
     public JFXTextField txtCustomerAddress;
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
-    //Property Injection (DI)
-    private final CrudDAO<CustomerDTO,String> customerDAO = new CustomerDAOImpl();
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -154,7 +153,8 @@ public class ManageCustomersFormController {
                 }
 
                 //Loos Coupling
-             customerDAO.save(new CustomerDTO(id, name, address));
+                customerDAO.save(new CustomerDTO(id, name, address));
+
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
