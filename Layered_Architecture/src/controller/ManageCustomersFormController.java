@@ -3,6 +3,7 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import dao.CrudDAO;
+import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -33,7 +34,7 @@ import java.util.List;
 
 public class ManageCustomersFormController {
     //Property Injection (DI)
-    private final CrudDAO<CustomerDTO, String> customerDAO = new CustomerDAOImpl();
+    private final CustomerDAO customerDAO = new CustomerDAOImpl();
     public AnchorPane root;
     public JFXTextField txtCustomerName;
     public JFXTextField txtCustomerId;
@@ -44,6 +45,7 @@ public class ManageCustomersFormController {
     public JFXButton btnAddNewCustomer;
 
     public void initialize() {
+
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         tblCustomers.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
         tblCustomers.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("address"));

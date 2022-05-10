@@ -3,6 +3,7 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import dao.CrudDAO;
+import dao.ItemDAO;
 import dao.ItemDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
  **/
 
 public class ManageItemsFormController {
-    private final CrudDAO<ItemDTO, String> itemDAO = new ItemDAOImpl();
+    private final ItemDAO itemDAO = new ItemDAOImpl();
     public AnchorPane root;
     public JFXTextField txtCode;
     public JFXTextField txtDescription;
