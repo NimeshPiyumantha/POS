@@ -1,8 +1,8 @@
-package dao;
+package dao.custom.impl;
 
+import dao.custom.CustomerDAO;
 import model.CustomerDTO;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
