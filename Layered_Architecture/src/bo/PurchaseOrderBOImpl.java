@@ -51,7 +51,7 @@ public class PurchaseOrderBOImpl {
             }
 
             //Search & Update Item
-//                ItemDTO item = findItem(detail.getItemCode());
+            //ItemDTO item = findItem(detail.getItemCode());
             ItemDTO item = null;
             item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
