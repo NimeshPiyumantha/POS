@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @since : 0.1.0
  **/
 public class ItemBOImpl implements ItemBO {
+
     private final ItemDAO itemDAO = new ItemDAOImpl();
 
     @Override

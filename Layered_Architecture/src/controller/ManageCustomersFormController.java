@@ -34,6 +34,7 @@ import java.util.List;
 public class ManageCustomersFormController {
     //Property Injection (DI)
     private final CustomerBO customerBO = new CustomerBOImpl();
+
     public AnchorPane root;
     public JFXTextField txtCustomerName;
     public JFXTextField txtCustomerId;

@@ -33,6 +33,7 @@ import java.util.ArrayList;
 public class ManageItemsFormController {
     //DI through property injection
     private final ItemBO itemBO = new ItemBOImpl();
+
     public AnchorPane root;
     public JFXTextField txtCode;
     public JFXTextField txtDescription;
