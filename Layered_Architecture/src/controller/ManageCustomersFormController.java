@@ -154,7 +154,9 @@ public class ManageCustomersFormController {
                 }
 
                 //Loos Coupling
-                customerDAO.save(new CustomerDTO(id, name, address));
+                //DI
+                CustomerBOImpl customerBO = new CustomerBOImpl();
+                customerBO.saveCustomer(new CustomerDTO(id, name, address));
 
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
@@ -176,8 +178,9 @@ public class ManageCustomersFormController {
 
                 //Customer update
                 //Loos Coupling
-                customerDAO.update(new CustomerDTO(id, name, address));
-
+                //DI
+                CustomerBOImpl customerBO = new CustomerBOImpl();
+                customerBO.updateCustomer(new CustomerDTO(id, name, address));
 
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
@@ -196,7 +199,10 @@ public class ManageCustomersFormController {
 
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        return customerDAO.exist(id);
+        //Loos coupling
+        //DI
+        CustomerBOImpl customerBO = new CustomerBOImpl();
+        return customerBO.customerExist(id);
     }
 
 
@@ -209,7 +215,9 @@ public class ManageCustomersFormController {
             }
 
             //Loos Coupling
-            customerDAO.delete(id);
+            //DI
+            CustomerBOImpl customerBO = new CustomerBOImpl();
+            customerBO.deleteCustomer(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();
@@ -226,7 +234,9 @@ public class ManageCustomersFormController {
         try {
 
             //Loos Coupling
-            return customerDAO.generateNewID();
+            //DI
+            CustomerBOImpl customerBO = new CustomerBOImpl();
+            return customerBO.generateNewCustomerID();
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
