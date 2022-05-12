@@ -1,9 +1,6 @@
 package dao;
-
-import dao.custom.CustomerDAO;
-import dao.custom.ItemDAO;
 import dao.custom.impl.*;
-import model.CustomerDTO;
+
 
 /**
  * @author : Sanu Vithanage
@@ -32,15 +29,15 @@ public class DAOFactory {
     public SuperDAO getDAO(DAOTypes types) {
         switch (types) {
             case CUSTOMER:
-                return new CustomerDAOImpl();
+                return new CustomerDAOImpl(); //SuperDAO superDAO=new CustomerDAOImpl();
             case ITEM:
-                return new ItemDAOImpl();
+                return new ItemDAOImpl(); //SuperDAO superDAO=new ItemDAOImpl();
             case ORDER:
-                return  new OrderDAOImpl();
+                return  new OrderDAOImpl(); //SuperDAO superDAO = new OrderDAOImpl();
             case ORDERDETAILS:
-                return new OrderDetailsDAOImpl();
+                return new OrderDetailsDAOImpl(); //SuperDAO superDAO = new OrderDetailsDAOImpl();
             case QUERYDAO:
-                return new QueryDAOImpl();
+                return new QueryDAOImpl(); //SuperDAO superDAO = new QueryDAOImpl();
             default:
                 return null;
         }

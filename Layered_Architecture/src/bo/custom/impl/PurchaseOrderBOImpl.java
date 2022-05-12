@@ -3,7 +3,6 @@ package bo.custom.impl;
 import bo.custom.PurchaseOrderBO;
 import dao.DAOFactory;
 import dao.custom.*;
-import dao.custom.impl.*;
 import db.DBConnection;
 import model.CustomerDTO;
 import model.ItemDTO;
@@ -22,24 +21,23 @@ import java.util.List;
  **/
 public class PurchaseOrderBOImpl implements PurchaseOrderBO {
 
-    CustomerDAO customerDAO =DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.CUSTOMER); // hide the object creation logic through the factory
+    //Hiding the object creation logic using the Factory pattern
+    private final CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.CUSTOMER);// hide the object creation logic through the factory
+    private final ItemDAO itemDAO = (ItemDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ITEM);
+    private final OrderDAO orderDAO = (OrderDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDER);
+    private final OrderDetailsDAO orderDetailsDAO = (OrderDetailsDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDERDETAILS);
+    private final QueryDAO queryDAO = (QueryDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.QUERYDAO);
 
-    // Exposed the object creation logic
-//    private final ItemDAO itemDAO = new ItemDAOImpl();
-    private final OrderDAO orderDAO = new OrderDAOImpl();
-    private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
-    private final QueryDAO queryDAO = new QueryDAOImpl();
 
+    //Exposed the object creation logic
+    //private final ItemDAO itemDAO = new ItemDAOImpl();
+    //private final OrderDAO orderDAO = new OrderDAOImpl();
+    //private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
+    //private final QueryDAO queryDAO = new QueryDAOImpl();
 
 
     @Override
     public boolean purchaseOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException {
-
-//        private final ItemDAO itemDAO = new ItemDAOImpl();
-//          ItemDAO itemDAO = new ItemDAOImpl();
-        DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ITEM);
-
-
 
         /*Transaction*/
         Connection connection = DBConnection.getDbConnection().getConnection();
