@@ -1,5 +1,6 @@
 package controller;
 
+import bo.ItemBO;
 import bo.ItemBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -30,7 +31,6 @@ import java.util.ArrayList;
  **/
 
 public class ManageItemsFormController {
-
     public AnchorPane root;
     public JFXTextField txtCode;
     public JFXTextField txtDescription;
@@ -40,6 +40,8 @@ public class ManageItemsFormController {
     public TableView<ItemTM> tblItems;
     public JFXTextField txtUnitPrice;
     public JFXButton btnAddNewItem;
+    //DI through property injection
+    private final ItemBO itemBO = new ItemBOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -75,15 +77,10 @@ public class ManageItemsFormController {
         tblItems.getItems().clear();
         try {
             /*Get all items*/
-            //Loos Coupling
-            //DI
-            ItemBOImpl itemBO = new ItemBOImpl();
             ArrayList<ItemDTO> allItems = itemBO.getAllItems();
-
             for (ItemDTO item : allItems) {
                 tblItems.getItems().add(new ItemTM(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
             }
-
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
@@ -139,13 +136,7 @@ public class ManageItemsFormController {
             if (!existItem(code)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
-
-            //Loos Coupling
-            //DI
-            ItemBOImpl itemBO = new ItemBOImpl();
             itemBO.deleteItem(code);
-
-
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
             tblItems.getSelectionModel().clearSelection();
             initUI();
@@ -184,14 +175,8 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
                 //Save Item
-                //Loos Coupling
-                //DI
-                ItemBOImpl itemBO = new ItemBOImpl();
                 itemBO.saveItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
-
-
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
-
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             } catch (ClassNotFoundException e) {
@@ -204,12 +189,7 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
                 }
                 /*Update Item*/
-                //Loos Coupling
-                //DI
-                ItemBOImpl itemBO = new ItemBOImpl();
                 itemBO.updateItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
-
-
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
                 selectedItem.setDescription(description);
                 selectedItem.setQtyOnHand(qtyOnHand);
@@ -221,27 +201,18 @@ public class ManageItemsFormController {
                 e.printStackTrace();
             }
         }
-
         btnAddNewItem.fire();
     }
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        //Loos Coupling
-        //DI
-        ItemBOImpl itemBO = new ItemBOImpl();
         return itemBO.itemExist(code);
     }
 
 
     private String generateNewId() {
         try {
-            //Loos Coupling
-            //DI
-            ItemBOImpl itemBO = new ItemBOImpl();
             return itemBO.generateNewItemCode();
-
-
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
