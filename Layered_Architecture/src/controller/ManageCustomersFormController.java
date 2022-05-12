@@ -1,5 +1,6 @@
 package controller;
 
+import bo.CustomerBO;
 import bo.CustomerBOImpl;
 import bo.ItemBOImpl;
 import com.jfoenix.controls.JFXButton;
@@ -78,7 +79,7 @@ public class ManageCustomersFormController {
 
             //Loos Coupling
             //DI
-            CustomerBOImpl customerBO = new CustomerBOImpl();
+            CustomerBO customerBO = new CustomerBOImpl();
             ArrayList<CustomerDTO> allCustomers = customerBO.getAllCustomers();
 
             for (CustomerDTO customer : allCustomers) {
@@ -156,7 +157,7 @@ public class ManageCustomersFormController {
 
                 //Loos Coupling
                 //DI
-                CustomerBOImpl customerBO = new CustomerBOImpl();
+                CustomerBO customerBO = new CustomerBOImpl();
                 customerBO.saveCustomer(new CustomerDTO(id, name, address));
 
 
@@ -180,7 +181,7 @@ public class ManageCustomersFormController {
                 //Customer update
                 //Loos Coupling
                 //DI
-                CustomerBOImpl customerBO = new CustomerBOImpl();
+                CustomerBO customerBO = new CustomerBOImpl();
                 customerBO.updateCustomer(new CustomerDTO(id, name, address));
 
             } catch (SQLException e) {
@@ -217,7 +218,7 @@ public class ManageCustomersFormController {
 
             //Loos Coupling
             //DI
-            CustomerBOImpl customerBO = new CustomerBOImpl();
+            CustomerBO customerBO = new CustomerBOImpl();
             customerBO.deleteCustomer(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
@@ -236,7 +237,7 @@ public class ManageCustomersFormController {
         try {
             //Loos Coupling
             //DI
-            CustomerBOImpl customerBO = new CustomerBOImpl();
+            CustomerBO customerBO = new CustomerBOImpl();
             return customerBO.generateNewCustomerID();
 
         } catch (SQLException e) {
