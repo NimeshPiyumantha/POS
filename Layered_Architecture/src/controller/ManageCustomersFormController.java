@@ -1,6 +1,7 @@
 package controller;
 
 import bo.CustomerBOImpl;
+import bo.ItemBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
@@ -230,9 +231,9 @@ public class ManageCustomersFormController {
         }
     }
 
+
     private String generateNewId() {
         try {
-
             //Loos Coupling
             //DI
             CustomerBOImpl customerBO = new CustomerBOImpl();
