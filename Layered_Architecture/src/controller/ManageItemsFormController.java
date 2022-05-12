@@ -31,6 +31,8 @@ import java.util.ArrayList;
  **/
 
 public class ManageItemsFormController {
+    //DI through property injection
+    private final ItemBO itemBO = new ItemBOImpl();
     public AnchorPane root;
     public JFXTextField txtCode;
     public JFXTextField txtDescription;
@@ -40,8 +42,6 @@ public class ManageItemsFormController {
     public TableView<ItemTM> tblItems;
     public JFXTextField txtUnitPrice;
     public JFXButton btnAddNewItem;
-    //DI through property injection
-    private final ItemBO itemBO = new ItemBOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
