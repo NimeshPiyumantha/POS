@@ -13,7 +13,6 @@ import java.util.ArrayList;
  **/
 public class OrderDetailsDAOImpl implements OrderDetailsDAO {
 
-
     @Override
     public ArrayList<OrderDetailDTO> getAll() throws SQLException, ClassNotFoundException {
         return null;
