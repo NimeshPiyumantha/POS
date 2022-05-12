@@ -1,9 +1,8 @@
 package controller;
 
+import bo.ItemBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import dao.custom.ItemDAO;
-import dao.custom.impl.ItemDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,7 +30,7 @@ import java.util.ArrayList;
  **/
 
 public class ManageItemsFormController {
-    private final ItemDAO itemDAO = new ItemDAOImpl();
+
     public AnchorPane root;
     public JFXTextField txtCode;
     public JFXTextField txtDescription;
@@ -77,7 +76,9 @@ public class ManageItemsFormController {
         try {
             /*Get all items*/
             //Loos Coupling
-            ArrayList<ItemDTO> allItems = itemDAO.getAll();
+            //DI
+            ItemBOImpl itemBO = new ItemBOImpl();
+            ArrayList<ItemDTO> allItems = itemBO.getAllItems();
 
             for (ItemDTO item : allItems) {
                 tblItems.getItems().add(new ItemTM(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
@@ -140,7 +141,10 @@ public class ManageItemsFormController {
             }
 
             //Loos Coupling
-            itemDAO.delete(code);
+            //DI
+            ItemBOImpl itemBO = new ItemBOImpl();
+            itemBO.deleteItem(code);
+
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
             tblItems.getSelectionModel().clearSelection();
@@ -181,7 +185,10 @@ public class ManageItemsFormController {
                 }
                 //Save Item
                 //Loos Coupling
-                itemDAO.save(new ItemDTO(code, description, unitPrice, qtyOnHand));
+                //DI
+                ItemBOImpl itemBO = new ItemBOImpl();
+                itemBO.saveItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
+
 
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
 
@@ -198,7 +205,10 @@ public class ManageItemsFormController {
                 }
                 /*Update Item*/
                 //Loos Coupling
-                itemDAO.update(new ItemDTO(code, description, unitPrice, qtyOnHand));
+                //DI
+                ItemBOImpl itemBO = new ItemBOImpl();
+                itemBO.updateItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
+
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
                 selectedItem.setDescription(description);
@@ -218,14 +228,18 @@ public class ManageItemsFormController {
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
         //Loos Coupling
-        return itemDAO.exist(code);
+        //DI
+        ItemBOImpl itemBO = new ItemBOImpl();
+        return itemBO.itemExist(code);
     }
 
 
     private String generateNewId() {
         try {
             //Loos Coupling
-            return itemDAO.generateNewID();
+            //DI
+            ItemBOImpl itemBO = new ItemBOImpl();
+            return itemBO.generateNewItemCode();
 
 
         } catch (SQLException e) {
