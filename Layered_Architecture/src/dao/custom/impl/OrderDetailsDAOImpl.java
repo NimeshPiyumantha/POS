@@ -1,6 +1,6 @@
 package dao.custom.impl;
 
-import dao.SQLUtil;
+import util.SQLUtil;
 import dao.custom.OrderDetailsDAO;
 import model.OrderDetailDTO;
 
