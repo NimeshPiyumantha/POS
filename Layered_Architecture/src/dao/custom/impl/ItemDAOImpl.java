@@ -1,5 +1,6 @@
 package dao.custom.impl;
 
+import entity.Item;
 import util.SQLUtil;
 import dao.custom.ItemDAO;
 import model.ItemDTO;
@@ -16,11 +17,11 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     @Override
-    public ArrayList<ItemDTO> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Item> getAll() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Item");
-        ArrayList<ItemDTO> allItems = new ArrayList<>();
+        ArrayList<Item> allItems = new ArrayList<>();
         while (rst.next()) {
-            allItems.add(new ItemDTO(rst.getString(1), rst.getString(2), rst.getBigDecimal(4), rst.getInt(3)));
+            allItems.add(new Item(rst.getString(1), rst.getString(2), rst.getInt(3), rst.getBigDecimal(4)));
         }
         return allItems;
     }
@@ -31,20 +32,20 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public boolean save(ItemDTO dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)", dto.getCode(), dto.getDescription(), dto.getUnitPrice(), dto.getQtyOnHand());
+    public boolean save(Item entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.executeUpdate("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)", entity.getCode(), entity.getDescription(), entity.getUnitPrice(), entity.getQtyOnHand());
     }
 
     @Override
-    public boolean update(ItemDTO dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?", dto.getDescription(), dto.getUnitPrice(), dto.getQtyOnHand(), dto.getCode());
+    public boolean update(Item entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.executeUpdate("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?", entity.getDescription(), entity.getUnitPrice(), entity.getQtyOnHand(), entity.getCode());
     }
 
     @Override
-    public ItemDTO search(String code) throws SQLException, ClassNotFoundException {
+    public Item search(String code) throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Item WHERE code=?", code);
         if (rst.next()) {
-            return new ItemDTO(rst.getString(1), rst.getString(2), rst.getBigDecimal(4), rst.getInt(3));
+            return new Item(rst.getString(1), rst.getString(2),rst.getInt(3), rst.getBigDecimal(4));
         }
         return null;
     }
@@ -67,7 +68,7 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public ArrayList<ItemDTO> getItemFromPrice(double price) throws ClassNotFoundException, SQLException {
+    public ArrayList<Item> getItemFromPrice(double price) throws ClassNotFoundException, SQLException {
         return null;
     }
 }

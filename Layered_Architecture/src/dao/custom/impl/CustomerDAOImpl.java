@@ -1,5 +1,6 @@
 package dao.custom.impl;
 
+import entity.Customer;
 import util.SQLUtil;
 import dao.custom.CustomerDAO;
 import model.CustomerDTO;
@@ -16,31 +17,31 @@ import java.util.ArrayList;
 public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
-    public ArrayList<CustomerDTO> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Customer> getAll() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Customer");
-        ArrayList<CustomerDTO> allCustomers = new ArrayList<>();
+        ArrayList<Customer> allCustomers = new ArrayList<>();
         while (rst.next()) {
-            allCustomers.add(new CustomerDTO(rst.getString(1), rst.getString(2), rst.getString(3)));
+            allCustomers.add(new Customer(rst.getString(1), rst.getString(2), rst.getString(3)));
         }
         return allCustomers;
     }
 
     @Override
-    public boolean save(CustomerDTO dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("INSERT INTO Customer (id,name, address) VALUES (?,?,?)", dto.getId(), dto.getName(), dto.getAddress());
+    public boolean save(Customer entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.executeUpdate("INSERT INTO Customer (id,name, address) VALUES (?,?,?)", entity.getId(), entity.getName(), entity.getAddress());
     }
 
 
     @Override
-    public boolean update(CustomerDTO dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("UPDATE Customer SET name=?, address=? WHERE id=?", dto.getName(), dto.getAddress(), dto.getId());
+    public boolean update(Customer entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.executeUpdate("UPDATE Customer SET name=?, address=? WHERE id=?", entity.getName(), entity.getAddress(), entity.getId());
     }
 
     @Override
-    public CustomerDTO search(String id) throws SQLException, ClassNotFoundException {
+    public Customer search(String id) throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Customer WHERE id=?", id);
         if (rst.next()) {
-            return new CustomerDTO(rst.getString(1), rst.getString(2), rst.getString(3));
+            return new Customer(rst.getString(1), rst.getString(2), rst.getString(3));
         }
         return null;
     }
@@ -70,7 +71,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public ArrayList<CustomerDTO> getAllCustomersByAddress(String address) throws ClassNotFoundException, SQLException {
+    public ArrayList<Customer> getAllCustomersByAddress(String address) throws ClassNotFoundException, SQLException {
         return null;
     }
 }
