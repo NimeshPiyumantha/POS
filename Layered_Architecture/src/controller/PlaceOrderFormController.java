@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.CustomerDTO;
 import model.ItemDTO;
+import model.OrderDTO;
 import model.OrderDetailDTO;
 import view.tdm.OrderDetailTM;
 
@@ -313,7 +314,8 @@ public class PlaceOrderFormController {
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
         try {
-            return purchaseOrderBO.purchaseOrder(orderId, orderDate, customerId, orderDetails);
+            OrderDTO orderDTO = new OrderDTO(orderId, orderDate, customerId, orderDetails))
+            return purchaseOrderBO.purchaseOrder(orderDTO);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {

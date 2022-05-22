@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author : Sanu Vithanage
@@ -13,22 +14,19 @@ public class OrderDTO  {
     private String orderId;
     private LocalDate orderDate;
     private String customerId;
+    List<OrderDetailDTO> orderDetails;
     private String customerName;
     private BigDecimal orderTotal;
+
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String orderId, LocalDate orderDate, String customerId) {
+    public OrderDTO(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails, String customerName, BigDecimal orderTotal) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.customerId = customerId;
-    }
-
-    public OrderDTO(String orderId, LocalDate orderDate, String customerId, String customerName, BigDecimal orderTotal) {
-        this.orderId = orderId;
-        this.orderDate = orderDate;
-        this.customerId = customerId;
+        this.orderDetails = orderDetails;
         this.customerName = customerName;
         this.orderTotal = orderTotal;
     }
@@ -57,6 +55,14 @@ public class OrderDTO  {
         this.customerId = customerId;
     }
 
+    public List<OrderDetailDTO> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetailDTO> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
     public String getCustomerName() {
         return customerName;
     }
@@ -79,6 +85,7 @@ public class OrderDTO  {
                 "orderId='" + orderId + '\'' +
                 ", orderDate=" + orderDate +
                 ", customerId='" + customerId + '\'' +
+                ", orderDetails=" + orderDetails +
                 ", customerName='" + customerName + '\'' +
                 ", orderTotal=" + orderTotal +
                 '}';
